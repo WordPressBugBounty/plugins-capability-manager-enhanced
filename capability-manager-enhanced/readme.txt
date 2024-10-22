@@ -7,7 +7,7 @@ Tags: capabilities, permissions, admin menus, user roles, user role editor
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.6
-Stable tag: 2.13.0
+Stable tag: 2.14.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -416,6 +416,28 @@ Fixed : Non-administrators with user editing capabilities could add new Administ
 Fixed : Security issue. Please update.
 
 == Changelog ==
+
+= 2.14.0 - 22 Oct 2024 =
+  * Update : Editor feature not working due to duplicate inline css, #1148
+  * Fixed : Editor Features not working for some items, #1145
+  * Update : Redirect new users to the "Dashboard" screen, #1150
+  * Fixed : Changing a capability from disabled to enabled not working when clicking the label, #1173
+  * Update : Move multisite settings to the sidebar, #1146
+  * Fixed : PHP warning about status capabilities, #1143
+  * Fixed : Unnecesary  database updates on init, #1139
+  * Fixed : Double queries in admin pages, #1140
+  * Update : Update the WooCommerce capabilties, #1135
+  * Update : Add a mesage if the "Additional" tab is empty, #1137
+  * Fixed : Warning: Undefined array key "user-testing", #1174
+  * Update : Show Wordfence capabilities tab for both Wordfence main and Login Security plugin, #1136
+  * Update : New filter "add_filter('pp_capabilities_frontend_feature_cache', '__return_false);" to disable Frontend feature data cache, #1152
+  * Update : Add a hook on after user testing action, #1160
+  * Fixed : pp_capabilities_get_post_type returns wrong post type, #1161
+  * Fixed : Editor Features custom item adding slashes to double quote(""), #689
+  * Fixed : Compatibility issue with Justified Image Grid, #1165
+  * Update : Permissions Compat: Allow direct assignment of manage_post_tags if unique taxonomy caps enabled for Tags, #1163
+  * Update : Capabilities screen: "Listing" tab should not require Pro version of Permissions, #1158
+  * Update : Translation Updates Capanilities v.2.13.0, #1134
 
 = 2.13.0 - 12 Feb 2024 =
   * Update : Add edit to features custom items, #996
