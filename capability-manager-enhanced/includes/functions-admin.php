@@ -120,7 +120,7 @@ function _pp_capabilities_is_block_editor_active($post_type = '', $args = [])
         'gutenberg'      => function_exists( 'the_gutenberg_project' ),
         'gutenberg-ramp' => class_exists('Gutenberg_Ramp'),
     );
-    
+
     $conditions = [];
 
     if ($suppress_filter) remove_filter('use_block_editor_for_post_type', $suppress_filter, 10, 2);
@@ -153,7 +153,7 @@ function _pp_capabilities_is_block_editor_active($post_type = '', $args = [])
                     && (get_option('classic-editor-replace') === 'classic'
                         && isset($_GET['classic-editor__forget']));
 
-    $conditions[] = $pluginsState['gutenberg-ramp'] 
+    $conditions[] = $pluginsState['gutenberg-ramp']
                     && apply_filters('use_block_editor_for_post', true, get_post(pp_capabilities_get_post_id()), PHP_INT_MAX);
 
     if (defined('PP_CAPABILITIES_RESTORE_NAV_TYPE_BLOCK_EDITOR_DISABLE') && version_compare($wp_version, '5.9-beta', '>=')) {
@@ -168,7 +168,7 @@ function _pp_capabilities_is_block_editor_active($post_type = '', $args = [])
                     }
                 )
             ) > 0;
-    
+
     if (!$suppress_filter) {
         $buffer[$post_type] = $result;
     }
@@ -190,7 +190,7 @@ function ppc_remove_non_alphanumeric_space_characters($string)
 {
     return preg_replace("/(\W)+/", "", $string);
 }
-	
+
 /**
  * Get all capabilities backup section.
  *
@@ -215,6 +215,12 @@ function pp_capabilities_backup_sections()
    //Admin Features
    $backup_sections[$cms_id . '_admin_features_backup']['label']     = esc_html__('Admin Features', 'capability-manager-enhanced');
    $backup_sections[$cms_id . '_admin_features_backup']['options'][] = "capsman_disabled_admin_features";
+   $backup_sections[$cms_id . '_admin_features_backup']['options'][] = "ppc_admin_features_settings";
+
+    //Admin Styles
+    $backup_sections[$cms_id . '_admin_styles_backup']['label']     = esc_html__('Admin Styles', 'capability-manager-enhanced');
+    $backup_sections[$cms_id . '_admin_styles_backup']['options'][] = "pp_capabilities_admin_styles";
+    $backup_sections[$cms_id . '_admin_styles_backup']['options'][] = "pp_capabilities_admin_styles_roles";
 
    //Frontend Features
    $backup_sections[$cms_id . '_frontend_features_backup']['label']     = esc_html__('Frontend Features', 'capability-manager-enhanced');
@@ -260,7 +266,7 @@ function ppc_add_inline_style($custom_css, $handle = 'ppc-dummy-css-handle')
 
    if (in_array($handle, $ppc_dummy_css_handle)) {
        // duplicate usage of this function with same handle won't work
-       $handle .= '-' . time(); 
+       $handle .= '-' . time();
    }
 
     $ppc_dummy_css_handle[] = $handle;
@@ -290,7 +296,7 @@ function ppc_add_inline_script($custom_script, $handle = 'ppc-dummy-script-handl
 
     if (in_array($handle, $ppc_dummy_script_handle)) {
         // duplicate usage of this function with same handle won't work
-        $handle .= '-' . time(); 
+        $handle .= '-' . time();
     }
 
     $ppc_dummy_script_handle[] = $handle;
@@ -304,6 +310,7 @@ function pp_capabilities_settings_options() {
    $settings_options = [
        'cme_editor_features_private_post_type',
        'cme_capabilities_show_private_taxonomies',
+       'cme_capabilities_show_private_post_types',
        'cme_capabilities_add_user_multi_roles',
        'cme_capabilities_edit_user_multi_roles',
        'cme_editor_features_classic_editor_tab',
@@ -331,6 +338,7 @@ function cme_publishpress_capabilities_capabilities($capabilities) {
             'manage_capabilities',
             'manage_capabilities_editor_features',
             'manage_capabilities_admin_features',
+            'manage_capabilities_admin_styles',
             'manage_capabilities_admin_menus',
             'manage_capabilities_frontend_features',
             'manage_capabilities_profile_features',
@@ -343,7 +351,7 @@ function cme_publishpress_capabilities_capabilities($capabilities) {
     );
 
     $capabilities = array_unique($capabilities);
-    
+
     return $capabilities;
 }
 
@@ -380,9 +388,9 @@ function pp_capabilities_dashboard_options() {
         'description'  => esc_html__('Admin Features allows you to remove elements from the admin area and toolbar.', 'capability-manager-enhanced'),
     ];
 
-    $features['frontend-features'] = [
-        'label'        => esc_html__('Frontend Features', 'capability-manager-enhanced'),
-        'description'  => esc_html__('Frontend Features allows you to add or remove elements from the frontend of your site.', 'capability-manager-enhanced'),
+    $features['admin-styles'] = [
+        'label'        => esc_html__('Admin Styles', 'capability-manager-enhanced'),
+        'description'  => esc_html__('Admin Styles allows you to customize the admin area with your own branding.', 'capability-manager-enhanced'),
     ];
 
     $features['profile-features'] = [
@@ -395,9 +403,14 @@ function pp_capabilities_dashboard_options() {
         'description'  => esc_html__('Redirects allows you to redirect users in a role after Registration, Login or Logout.', 'capability-manager-enhanced'),
     ];
 
+    $features['frontend-features'] = [
+        'label'        => esc_html__('Frontend Features', 'capability-manager-enhanced'),
+        'description'  => esc_html__('Frontend Features allows you to add or remove elements from the frontend of your site.', 'capability-manager-enhanced'),
+    ];
+
     $features['nav-menus'] = [
-        'label'        => esc_html__('Nav Menus', 'capability-manager-enhanced'),
-        'description'  => esc_html__('Nav Menus allows you to block access to frontend menu links.', 'capability-manager-enhanced'),
+        'label'        => esc_html__('Navigation Menus', 'capability-manager-enhanced'),
+        'description'  => esc_html__('Navigation Menus allows you to block access to frontend menu links.', 'capability-manager-enhanced'),
     ];
 
     $features['user-testing'] = [
@@ -464,11 +477,11 @@ function pp_capabilities_sub_menu_lists($cme_fakefunc = false) {
         'callback'          => $cme_fakefunc ? 'cme_fakefunc' : [$capsman, 'ManageAdminFeatures'],
         'dashboard_control' => true,
     ];
-    $sub_menu_pages['frontend-features'] = [
-        'title'             => __('Frontend Features', 'capability-manager-enhanced'),
-        'capabilities'      => $super_user ? 'read' : 'manage_capabilities_frontend_features',
-        'page'              => 'pp-capabilities-frontend-features',
-        'callback'          => $cme_fakefunc ? 'cme_fakefunc' : [$capsman, 'ManageFrontendFeatures'],
+    $sub_menu_pages['admin-styles'] = [
+        'title'             => __('Admin Styles', 'capability-manager-enhanced'),
+        'capabilities'      => $super_user ? 'read' : 'manage_capabilities_admin_styles',
+        'page'              => 'pp-capabilities-admin-styles',
+        'callback'          => $cme_fakefunc ? 'cme_fakefunc' : [$capsman, 'ManageAdminStyles'],
         'dashboard_control' => true,
     ];
     if ($cme_fakefunc) {
@@ -494,8 +507,15 @@ function pp_capabilities_sub_menu_lists($cme_fakefunc = false) {
         'callback'          => $cme_fakefunc ? 'cme_fakefunc' : [$capsman, 'ManageRedirects'],
         'dashboard_control' => true,
     ];
+    $sub_menu_pages['frontend-features'] = [
+        'title'             => __('Frontend Features', 'capability-manager-enhanced'),
+        'capabilities'      => $super_user ? 'read' : 'manage_capabilities_frontend_features',
+        'page'              => 'pp-capabilities-frontend-features',
+        'callback'          => $cme_fakefunc ? 'cme_fakefunc' : [$capsman, 'ManageFrontendFeatures'],
+        'dashboard_control' => true,
+    ];
     $sub_menu_pages['nav-menus'] = [
-        'title'             => __('Nav Menus', 'capability-manager-enhanced'),
+        'title'             => __('Navigation Menus', 'capability-manager-enhanced'),
         'capabilities'      => $super_user ? 'read' : 'manage_capabilities_nav_menus',
         'page'              => 'pp-capabilities-nav-menus',
         'callback'          => $cme_fakefunc ? 'cme_fakefunc' : [$capsman, 'ManageNavMenus'],
@@ -540,11 +560,11 @@ function pp_capabilities_user_can_caps() {
  * @param string $title
  * @param string $separator
  * @param string $slug_case
- * 
+ *
  * @return string
  */
 function pp_capabilities_convert_to_slug($title, $separator = '-', $slug_case = 'strtolower') {
-    
+
     if ($slug_case == 'strtolower') {
         $title = strtolower($title);
     } elseif ($slug_case == 'ucwords') {
