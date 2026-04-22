@@ -1,0 +1,94 @@
+Running php-build composer
+
+WARNING! Your credentials are stored unencrypted in '/home/runner/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+Pulling docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+php-8.4-zip-mysqli-build2.1.0: Pulling from publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities
+589002ba0eae: Pulling fs layer
+7217e707b959: Pulling fs layer
+eaca43c12286: Pulling fs layer
+4ac517bd0797: Pulling fs layer
+24d2a4a6f6dd: Pulling fs layer
+21c4debc94ec: Pulling fs layer
+67886838fa02: Pulling fs layer
+2ffe46bad7c5: Pulling fs layer
+07ad488b377f: Pulling fs layer
+68a9d54b7a82: Pulling fs layer
+e09eaf22a45d: Pulling fs layer
+923405e1319e: Pulling fs layer
+4adeecb530ce: Pulling fs layer
+24d2a4a6f6dd: Waiting
+21c4debc94ec: Waiting
+67886838fa02: Waiting
+2ffe46bad7c5: Waiting
+07ad488b377f: Waiting
+68a9d54b7a82: Waiting
+4adeecb530ce: Waiting
+4ac517bd0797: Waiting
+923405e1319e: Waiting
+7217e707b959: Verifying Checksum
+7217e707b959: Download complete
+589002ba0eae: Verifying Checksum
+589002ba0eae: Download complete
+eaca43c12286: Verifying Checksum
+eaca43c12286: Download complete
+589002ba0eae: Pull complete
+4ac517bd0797: Verifying Checksum
+4ac517bd0797: Download complete
+21c4debc94ec: Verifying Checksum
+21c4debc94ec: Download complete
+24d2a4a6f6dd: Verifying Checksum
+24d2a4a6f6dd: Download complete
+07ad488b377f: Verifying Checksum
+07ad488b377f: Download complete
+2ffe46bad7c5: Verifying Checksum
+2ffe46bad7c5: Download complete
+67886838fa02: Verifying Checksum
+67886838fa02: Download complete
+68a9d54b7a82: Verifying Checksum
+68a9d54b7a82: Download complete
+e09eaf22a45d: Verifying Checksum
+e09eaf22a45d: Download complete
+7217e707b959: Pull complete
+923405e1319e: Verifying Checksum
+923405e1319e: Download complete
+eaca43c12286: Pull complete
+4ac517bd0797: Pull complete
+24d2a4a6f6dd: Pull complete
+21c4debc94ec: Pull complete
+4adeecb530ce: Verifying Checksum
+4adeecb530ce: Download complete
+67886838fa02: Pull complete
+2ffe46bad7c5: Pull complete
+07ad488b377f: Pull complete
+68a9d54b7a82: Pull complete
+e09eaf22a45d: Pull complete
+923405e1319e: Pull complete
+4adeecb530ce: Pull complete
+Digest: sha256:5de316c212369f1d22868fc30cff36ce9c7c09257ccdde49eadd7b1e769fe9bd
+Status: Downloaded newer image for docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+Docker tag: docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+No private keys supplied
+Command: composer validate --no-interaction
+Skipping env variable PWD
+Skipping env variable HOME
+Skipping env variable SHLVL
+Skipping env variable PATH
+Running php-build composer
+Login Succeeded
+Pulling docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+php-8.4-zip-mysqli-build2.1.0: Pulling from publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities
+Digest: sha256:5de316c212369f1d22868fc30cff36ce9c7c09257ccdde49eadd7b1e769fe9bd
+Status: Image is up to date for docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+Docker tag: docker.pkg.github.com/publishpress/publishpress-capabilities/php-actions_composer_publishpress-capabilities:php-8.4-zip-mysqli-build2.1.0
+No private keys supplied
+Command: composer install --no-progress --no-interaction
+Skipping env variable PWD
+Skipping env variable HOME
+Skipping env variable SHLVL
+Skipping env variable PATH
